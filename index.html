@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>SwiftPage – Webbplatser för småföretag</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+:root {
+  --ink:     #111827;
+  --ink2:    #374151;
+  --muted:   #6B7280;
+  --light:   #9CA3AF;
+  --bg:      #F9FAFB;
+  --white:   #FFFFFF;
+  --border:  #E5E7EB;
+  --accent:  #1D4ED8;
+  --accent2: #2563EB;
+  --accent-bg: #EFF6FF;
+  --green:   #059669;
+  --green-bg:#ECFDF5;
+  --r: 14px; --r-lg: 20px; --r-xl: 28px;
+  --shadow: 0 1px 8px rgba(17,24,39,0.07);
+  --shadow-md: 0 4px 20px rgba(17,24,39,0.10);
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--bg); color: var(--ink);
+  max-width: 480px; margin: 0 auto;
+  overflow-x: hidden; min-height: 100vh;
+}
+
+/* NAV */
+.topnav {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--white); border-bottom: 1px solid var(--border);
+  padding: 14px 20px; display: flex; align-items: center; justify-content: space-between;
+}
+.logo {
+  display: flex; align-items: center; gap: 9px;
+  font-size: 19px; font-weight: 800; color: var(--ink); letter-spacing: -0.3px;
+}
+.logo-mark {
+  width: 34px; height: 34px; border-radius: 10px;
+  background: var(--ink); display: flex; align-items: center; justify-content: center;
+}
+.logo-mark svg { width: 18px; height: 18px; fill: white; }
+.nav-btn {
+  background: var(--accent); color: white; border: none; border-radius: 100px;
+  padding: 9px 20px; font-family: inherit; font-size: 13px; font-weight: 700;
+  cursor: pointer; text-decoration: none;
+}
+
+/* HERO */
+.hero {
+  background: var(--ink); padding: 36px 20px 32px;
+  position: relative; overflow: hidden;
+}
+.hero::before {
+  content: ''; position: absolute; top: -60px; right: -60px;
+  width: 220px; height: 220px; border-radius: 50%;
+  background: rgba(37,99,235,0.18);
+}
+.hero::after {
+  content: ''; position: absolute; bottom: -40px; left: -40px;
+  width: 160px; height: 160px; border-radius: 50%;
+  background: rgba(37,99,235,0.08);
+}
+.hero-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.6); font-size: 12px; font-weight: 600;
+  padding: 5px 13px; border-radius: 100px; margin-bottom: 20px;
+  position: relative; z-index: 1;
+}
+.chip-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent2); }
+.hero-h1 {
+  font-size: 32px; font-weight: 800; color: white;
+  line-height: 1.12; letter-spacing: -0.8px; margin-bottom: 12px;
+  position: relative; z-index: 1;
+}
+.hero-h1 em { font-style: normal; color: #93C5FD; }
+.hero-p {
+  font-size: 14px; color: rgba(255,255,255,0.5);
+  line-height: 1.65; margin-bottom: 28px; position: relative; z-index: 1;
+}
+.hero-cta {
+  display: block; background: var(--accent); color: white;
+  border: none; border-radius: var(--r); padding: 15px 20px;
+  font-family: inherit; font-size: 15px; font-weight: 700;
+  text-align: center; text-decoration: none; position: relative; z-index: 1;
+}
+.hero-stats {
+  display: flex; margin-top: 24px;
+  border-top: 1px solid rgba(255,255,255,0.08); padding-top: 20px;
+  position: relative; z-index: 1; gap: 0;
+}
+.hstat { flex: 1; }
+.hstat + .hstat { border-left: 1px solid rgba(255,255,255,0.08); padding-left: 16px; }
+.hstat-num { font-size: 22px; font-weight: 800; color: white; letter-spacing: -0.5px; }
+.hstat-label { font-size: 11px; color: rgba(255,255,255,0.38); font-weight: 600; margin-top: 3px; }
+
+/* WHAT */
+.section { padding: 28px 20px 0; }
+.eyebrow { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--accent); margin-bottom: 6px; }
+.sh2 { font-size: 22px; font-weight: 800; color: var(--ink); letter-spacing: -0.4px; line-height: 1.2; margin-bottom: 4px; }
+.ssub { font-size: 13px; color: var(--muted); line-height: 1.55; margin-bottom: 20px; }
+
+/* SERVICE CARDS */
+.service-list { display: flex; flex-direction: column; gap: 12px; }
+.svc-card {
+  background: var(--white); border: 1.5px solid var(--border);
+  border-radius: var(--r-lg); padding: 18px 16px;
+  display: flex; align-items: flex-start; gap: 14px;
+  box-shadow: var(--shadow);
+}
+.svc-icon {
+  width: 48px; height: 48px; border-radius: var(--r);
+  background: var(--accent-bg);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; flex-shrink: 0;
+}
+.svc-body { flex: 1; }
+.svc-name { font-size: 15px; font-weight: 700; color: var(--ink); }
+.svc-desc { font-size: 12px; color: var(--muted); margin-top: 3px; line-height: 1.55; }
+.svc-price { font-size: 18px; font-weight: 800; color: var(--accent); margin-top: 8px; }
+.svc-price-sub { font-size: 11px; color: var(--muted); font-weight: 500; }
+
+/* WHY */
+.why-list { display: flex; flex-direction: column; gap: 12px; }
+.why-item {
+  background: var(--white); border: 1.5px solid var(--border);
+  border-radius: var(--r-lg); padding: 16px;
+  display: flex; align-items: flex-start; gap: 12px;
+  box-shadow: var(--shadow);
+}
+.why-icon { font-size: 22px; flex-shrink: 0; margin-top: 1px; }
+.why-title { font-size: 14px; font-weight: 700; color: var(--ink); }
+.why-desc { font-size: 12px; color: var(--muted); margin-top: 3px; line-height: 1.55; }
+
+/* REFERENCE */
+.ref-card {
+  background: var(--white); border: 1.5px solid var(--border);
+  border-radius: var(--r-xl); overflow: hidden; box-shadow: var(--shadow);
+}
+.ref-head {
+  background: var(--ink); padding: 16px 20px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.ref-head-title { font-size: 14px; font-weight: 700; color: white; }
+.ref-head-badge {
+  background: var(--green); color: white; border-radius: 100px;
+  font-size: 11px; font-weight: 700; padding: 4px 11px;
+}
+.ref-body { padding: 18px 20px; }
+.ref-name { font-size: 17px; font-weight: 800; color: var(--ink); margin-bottom: 4px; }
+.ref-desc { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 14px; }
+.ref-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.ref-tag {
+  background: var(--accent-bg); border: 1px solid #BFDBFE;
+  color: var(--accent); border-radius: 100px;
+  font-size: 11px; font-weight: 600; padding: 3px 10px;
+}
+.ref-link {
+  display: block; margin-top: 14px;
+  background: var(--accent-bg); border: 1.5px solid #BFDBFE;
+  border-radius: var(--r); padding: 11px 14px;
+  font-size: 13px; font-weight: 700; color: var(--accent);
+  text-decoration: none; text-align: center;
+}
+
+/* PROCESS */
+.process-list { display: flex; flex-direction: column; gap: 0; }
+.proc-item { display: flex; align-items: stretch; gap: 14px; }
+.proc-rail { display: flex; flex-direction: column; align-items: center; width: 32px; flex-shrink: 0; }
+.proc-num {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--accent); color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 800; flex-shrink: 0;
+}
+.proc-line { flex: 1; width: 2px; background: var(--border); margin: 4px 0; min-height: 20px; }
+.proc-item:last-child .proc-line { display: none; }
+.proc-body { flex: 1; padding-bottom: 20px; padding-top: 4px; }
+.proc-title { font-size: 14px; font-weight: 700; color: var(--ink); }
+.proc-desc { font-size: 12px; color: var(--muted); margin-top: 3px; line-height: 1.55; }
+
+/* CONTACT */
+.contact-wrap { padding: 28px 20px 0; }
+.contact-card {
+  background: var(--ink); border-radius: var(--r-xl);
+  padding: 24px 20px; position: relative; overflow: hidden;
+}
+.contact-card::before {
+  content: ''; position: absolute; top: -80px; right: -80px;
+  width: 200px; height: 200px; border-radius: 50%;
+  background: rgba(37,99,235,0.12);
+}
+.ctitle { font-size: 20px; font-weight: 800; color: white; margin-bottom: 4px; position: relative; z-index:1; }
+.csub   { font-size: 13px; color: rgba(255,255,255,0.4); margin-bottom: 18px; position: relative; z-index:1; }
+.cform  { display: flex; flex-direction: column; gap: 10px; position: relative; z-index:1; }
+.ci {
+  padding: 12px 14px; background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1); border-radius: var(--r);
+  font-family: inherit; font-size: 14px; font-weight: 500;
+  color: white; width: 100%;
+}
+.ci::placeholder { color: rgba(255,255,255,0.25); }
+.ci:focus { outline: none; border-color: var(--accent2); }
+.ci-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+textarea.ci { height: 80px; resize: none; }
+.csend {
+  padding: 14px; background: var(--accent); color: white;
+  border: none; border-radius: var(--r);
+  font-family: inherit; font-size: 15px; font-weight: 700;
+  cursor: pointer; width: 100%; position: relative; z-index:1;
+}
+.csuccess {
+  display: none; text-align: center; padding: 28px 0;
+  color: #6EE7B7; font-size: 15px; font-weight: 700;
+  position: relative; z-index:1;
+}
+
+/* FOOTER */
+footer {
+  padding: 28px 20px 40px; text-align: center;
+  margin-top: 28px;
+}
+.flogo { font-size: 16px; font-weight: 800; color: var(--ink); margin-bottom: 6px; }
+.fsub  { font-size: 12px; color: var(--muted); line-height: 1.7; }
+
+/* ANIM */
+@keyframes up { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
+.a1{animation:up .45s .05s both;} .a2{animation:up .45s .12s both;}
+.a3{animation:up .45s .19s both;} .a4{animation:up .45s .26s both;}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="topnav">
+  <div class="logo">
+    <div class="logo-mark">
+      <svg viewBox="0 0 24 24"><path d="M7 2h10a2 2 0 012 2v16a2 2 0 01-2 2H7a2 2 0 01-2-2V4a2 2 0 012-2zm5 3l-4 6h3v6l4-6h-3V5z"/></svg>
+    </div>
+    SwiftPage
+  </div>
+  <a href="#contact" class="nav-btn">Kontakta oss</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-chip a1"><div class="chip-dot"></div>Webbplatser för småföretag i Sverige</div>
+  <h1 class="hero-h1 a2">Din hemsida<br>klar på <em>5 dagar.</em></h1>
+  <p class="hero-p a3">Vi bygger professionella webbplatser för småföretag i Oxelösund, Nyköping & Stockholm — snabbt, enkelt och till ett fast pris. Inga dolda kostnader.</p>
+  <a href="#contact" class="hero-cta a4">Få en gratis offert →</a>
+  <div class="hero-stats a4">
+    <div class="hstat">
+      <div class="hstat-num">5 dagar</div>
+      <div class="hstat-label">leveranstid</div>
+    </div>
+    <div class="hstat">
+      <div class="hstat-num">Fast pris</div>
+      <div class="hstat-label">inga överraskningar</div>
+    </div>
+    <div class="hstat">
+      <div class="hstat-num">24h</div>
+      <div class="hstat-label">svarstid</div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<div class="section">
+  <div class="eyebrow">Tjänster</div>
+  <div class="sh2">Vad vi erbjuder.</div>
+  <div class="ssub">Allt du behöver för att synas online — på ett ställe.</div>
+  <div class="service-list">
+
+    <div class="svc-card">
+      <div class="svc-icon">🌐</div>
+      <div class="svc-body">
+        <div class="svc-name">Startpaket</div>
+        <div class="svc-desc">En snygg, mobilanpassad hemsida med 1–3 sidor. Domän, hosting och kontaktformulär ingår. Perfekt för dig som vill komma igång snabbt.</div>
+        <div class="svc-price">9 900 SEK <span class="svc-price-sub">engångspris</span></div>
+      </div>
+    </div>
+
+    <div class="svc-card">
+      <div class="svc-icon">⚡</div>
+      <div class="svc-body">
+        <div class="svc-name">Företagspaket</div>
+        <div class="svc-desc">Upp till 6 sidor, bokningsformulär, Google Maps, SEO-optimering och integrering med sociala medier. Allt du behöver för att ta fler kunder.</div>
+        <div class="svc-price">15 900 SEK <span class="svc-price-sub">engångspris</span></div>
+      </div>
+    </div>
+
+    <div class="svc-card">
+      <div class="svc-icon">🔧</div>
+      <div class="svc-body">
+        <div class="svc-name">Underhåll & uppdateringar</div>
+        <div class="svc-desc">Löpande uppdateringar, ändringar och teknisk support. Vi håller din hemsida aktuell.</div>
+        <div class="svc-price">990 SEK/mån <span class="svc-price-sub">löpande avtal</span></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- WHY -->
+<div class="section" style="margin-top:8px;">
+  <div class="eyebrow">Varför SwiftPage</div>
+  <div class="sh2">Inte en byrå.<br>En partner.</div>
+  <div class="ssub">Vi är ett litet team — det betyder snabbare kommunikation, lägre pris och mer personlig service.</div>
+  <div class="why-list">
+    <div class="why-item">
+      <div class="why-icon">🇸🇪</div>
+      <div><div class="why-title">Lokalt i Oxelösund & Nyköping</div><div class="why-desc">Vi är lokalt baserade i Oxelösund/Nyköping och kan mötas fysiskt om du vill.</div></div>
+    </div>
+    <div class="why-item">
+      <div class="why-icon">⏱️</div>
+      <div><div class="why-title">Klar på 5 arbetsdagar</div><div class="why-desc">Stora byråer tar 6–12 veckor. Vi levererar på 5 dagar — utan att kompromissa med kvaliteten.</div></div>
+    </div>
+    <div class="why-item">
+      <div class="why-icon">💶</div>
+      <div><div class="why-title">Halva priset jämfört med en byrå</div><div class="why-desc">En typisk webbyrå tar 30 000–80 000 SEK för samma jobb. Vi tar fast pris från 9 900 SEK.</div></div>
+    </div>
+    <div class="why-item">
+      <div class="why-icon">📱</div>
+      <div><div class="why-title">Mobilanpassat & snabbt</div><div class="why-desc">Alla sidor fungerar perfekt på mobil, surfplatta och dator. Inget extra.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- REFERENCE -->
+<div class="section" style="margin-top:8px;">
+  <div class="eyebrow">Referens</div>
+  <div class="sh2">Vad vi har byggt.</div>
+  <div class="ssub">Se ett exempel på vår senaste leverans.</div>
+  <div class="ref-card">
+    <div class="ref-head">
+      <div>
+        <div class="ref-head-title">SwiftBox</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px;">Internationell pakettransport</div>
+      </div>
+      <div class="ref-head-badge">✓ Live</div>
+    </div>
+    <div class="ref-body">
+      <div class="ref-name">swiftbox.hu</div>
+      <div class="ref-desc">Komplett hemsida med prisräknare, ruttvisning, kontaktformulär och e-postintegration. Byggd och driftsatt på 1 dag.</div>
+      <div class="ref-tags">
+        <span class="ref-tag">Mobilanpassad</span>
+        <span class="ref-tag">Prisräknare</span>
+        <span class="ref-tag">Kontaktformulär</span>
+        <span class="ref-tag">E-post</span>
+        <span class="ref-tag">GDPR</span>
+      </div>
+      <a href="https://swiftbox.hu" target="_blank" class="ref-link">Besök swiftbox.hu →</a>
+    </div>
+  </div>
+</div>
+
+<!-- PROCESS -->
+<div class="section" style="margin-top:8px;">
+  <div class="eyebrow">Så fungerar det</div>
+  <div class="sh2">Från idé till live<br>på 5 dagar.</div>
+  <div class="ssub" style="margin-bottom:20px;">Enkel process, inga överraskningar.</div>
+  <div class="process-list">
+    <div class="proc-item">
+      <div class="proc-rail"><div class="proc-num">1</div><div class="proc-line"></div></div>
+      <div class="proc-body">
+        <div class="proc-title">Dag 1 — Möte & brief</div>
+        <div class="proc-desc">Vi pratar igenom vad du behöver — telefon, video eller fysiskt möte i Oxelösund eller Nyköping. 30 minuter räcker.</div>
+      </div>
+    </div>
+    <div class="proc-item">
+      <div class="proc-rail"><div class="proc-num">2</div><div class="proc-line"></div></div>
+      <div class="proc-body">
+        <div class="proc-title">Dag 2–3 — Design & byggnad</div>
+        <div class="proc-desc">Vi bygger din hemsida. Du ser ett förslag och kan ge feedback.</div>
+      </div>
+    </div>
+    <div class="proc-item">
+      <div class="proc-rail"><div class="proc-num">3</div><div class="proc-line"></div></div>
+      <div class="proc-body">
+        <div class="proc-title">Dag 4 — Godkännande</div>
+        <div class="proc-desc">Du granskar och godkänner. Vi gör justeringar tills du är nöjd.</div>
+      </div>
+    </div>
+    <div class="proc-item">
+      <div class="proc-rail"><div class="proc-num">4</div></div>
+      <div class="proc-body">
+        <div class="proc-title">Dag 5 — Live!</div>
+        <div class="proc-desc">Din hemsida är live med domän, hosting och e-post. Redo att ta emot kunder.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div class="contact-wrap" id="contact">
+  <div class="eyebrow" style="margin-bottom:6px;">Kontakt</div>
+  <div class="sh2" style="margin-bottom:16px;">Få en gratis offert.</div>
+  <div class="contact-card">
+    <div class="ctitle">Hör av dig</div>
+    <div class="csub">Vi svarar inom 24 timmar — på svenska och ungerska.</div>
+    <div class="cform" id="cf-form">
+      <div class="ci-row">
+        <input class="ci" id="cf-name"  type="text"  placeholder="Ditt namn">
+        <input class="ci" id="cf-email" type="email" placeholder="E-post">
+      </div>
+      <input class="ci" id="cf-phone" type="tel" placeholder="Telefon (valfritt)">
+      <input class="ci" id="cf-company" type="text" placeholder="Företagsnamn">
+      <select class="ci" id="cf-pkg" style="appearance:none;-webkit-appearance:none;">
+        <option value="" disabled selected>Vilket paket är du intresserad av?</option>
+        <option>Startpaket – 9 900 SEK</option>
+        <option>Företagspaket – 15 900 SEK</option>
+        <option>Underhåll – 990 SEK/mån</option>
+        <option>Vet inte än – vill ha mer info</option>
+      </select>
+      <textarea class="ci" id="cf-msg" placeholder="Berätta kort om ditt företag och vad du behöver…"></textarea>
+      <button class="csend" onclick="send()">Skicka förfrågan →</button>
+    </div>
+    <div class="csuccess" id="cf-ok">✅ Tack! Vi hör av oss inom 24 timmar.</div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="flogo">SwiftPage</div>
+  <div class="fsub">Webbplatser för småföretag · Oxelösund & Nyköping<br>info@swiftpage.se · swiftpage.vercel.app</div>
+</footer>
+
+<script>
+async function send(){
+  const n = document.getElementById('cf-name').value.trim();
+  const e = document.getElementById('cf-email').value.trim();
+  const p = document.getElementById('cf-phone').value.trim();
+  const c = document.getElementById('cf-company').value.trim();
+  const pkg = document.getElementById('cf-pkg').value;
+  const msg = document.getElementById('cf-msg').value.trim();
+
+  if(!n||!e){alert('Fyll i namn och e-post.');return;}
+
+  const btn = document.querySelector('.csend');
+  btn.textContent='Skickar...'; btn.disabled=true;
+
+  try {
+    const res = await fetch('https://api.web3forms.com/submit', {
+      method:'POST',
+      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body: JSON.stringify({
+        access_key: '5bfa3fdf-4f48-42c2-bccb-3c68881b10b5',
+        subject: 'Ny förfrågan – SwiftPage',
+        name: n, email: e, phone: p,
+        company: c, package: pkg, message: msg
+      })
+    });
+    if(res.ok){
+      document.getElementById('cf-form').style.display='none';
+      document.getElementById('cf-ok').style.display='block';
+    } else {
+      alert('Något gick fel. Försök igen eller skriv till info@swiftpage.se');
+      btn.textContent='Skicka förfrågan →'; btn.disabled=false;
+    }
+  } catch(err){
+    alert('Nätverksfel. Försök igen.');
+    btn.textContent='Skicka förfrågan →'; btn.disabled=false;
+  }
+}
+</script>
+</body>
+</html>
